@@ -1,5 +1,5 @@
 # ofxPtf
 
-![alt text](http://www.neilmendoza.com/media/images/ofxptg.png "screenshot")
+![alt text](http://www.neilmendoza.com/media/images/ofxptf.png "screenshot")
 
 Parallel transport frame implementation based on Cinder's implementation as they seem to handle edge cases nicely.
