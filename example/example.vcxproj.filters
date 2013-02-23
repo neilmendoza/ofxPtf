@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<ItemGroup>
+		<ClCompile Include="src\testApp.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="src\main.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxPtf\src\ParallelTransportFrames.cpp">
+			<Filter>addons\ofxPtf\src</Filter>
+		</ClCompile>
+	</ItemGroup>
+	<ItemGroup>
+		<Filter Include="src">
+			<UniqueIdentifier>{d8376475-7454-4a24-b08a-aac121d3ad6f}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons">
+			<UniqueIdentifier>{71834f65-f3a9-211e-73b8-dc8563776aec}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxPtf">
+			<UniqueIdentifier>{3e0cfca5-cc8c-5ef1-2b03-86709933bb4e}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxPtf\src">
+			<UniqueIdentifier>{e6b68c6f-26e2-e282-7a2f-060ed5b11e20}</UniqueIdentifier>
+		</Filter>
+	</ItemGroup>
+	<ItemGroup>
+		<ClInclude Include="src\testApp.h">
+			<Filter>src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxPtf\src\ofxPtf.h">
+			<Filter>addons\ofxPtf\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxPtf\src\ParallelTransportFrames.h">
+			<Filter>addons\ofxPtf\src</Filter>
+		</ClInclude>
+	</ItemGroup>
+</Project>
