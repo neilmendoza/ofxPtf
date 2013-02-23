@@ -38,7 +38,7 @@ void testApp::draw()
     
     ofPushMatrix();
     
-    // rotate around y axis
+    // rotate around x axis
     ofRotate(50.f * ofGetElapsedTimef(), 1, 0, 0);
     ofSetColor(0, 255, 255);
     
