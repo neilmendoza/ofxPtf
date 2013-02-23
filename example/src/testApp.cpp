@@ -46,7 +46,7 @@ void testApp::draw()
     {
         ofPushMatrix();
         
-        // multiply current matrix (rotated around y axis)
+        // multiply current matrix (rotated around x axis)
         // by transform for next frame
         ofMultMatrix(ptf.frameAt(i));
         
