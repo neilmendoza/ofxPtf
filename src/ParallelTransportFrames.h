@@ -61,6 +61,8 @@ namespace itg
        
         ofVec3f calcCurrentNormal() const;
         
+        void clear();
+        
     private:
         void firstFrame();
         void nextFrame();

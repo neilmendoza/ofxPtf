@@ -140,4 +140,10 @@ namespace itg
             glPopMatrix();
         }
     }
+    
+    void ParallelTransportFrames::clear()
+    {
+        points.clear();
+        frames.clear();
+    }
 }
