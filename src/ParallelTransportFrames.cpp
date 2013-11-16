@@ -33,9 +33,16 @@
 
 namespace itg
 {
+    ParallelTransportFrames::ParallelTransportFrames() :
+        maxPoints(4), maxFrames(numeric_limits<unsigned>::max())
+    {
+        
+    }
+    
     bool ParallelTransportFrames::addPoint(const ofVec3f& point)
     {
         points.push_back(point);
+        while (points.size() > maxPoints) points.pop_front();
         if (points.size() == 3) firstFrame();
         else if (points.size() > 3)
         {
@@ -110,6 +117,7 @@ namespace itg
             frames.push_back(frames.back() * Tr);
         }
         prevTangent = curTangent;
+        while (frames.size() > maxFrames) frames.pop_front();
     }
     
     ofMatrix4x4 ParallelTransportFrames::normalMatrix() const

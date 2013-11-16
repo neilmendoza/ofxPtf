@@ -43,6 +43,8 @@ namespace itg
     public:
         // TODO: add startNormal
         
+        ParallelTransportFrames();
+        
         bool addPoint(const ofVec3f& point);
         void debugDraw(float axisSize = 10.f);
         
@@ -63,7 +65,11 @@ namespace itg
         
         void clear();
         
+        void setMaxFrames(unsigned maxFrames) { this->maxFrames = maxFrames; }
+        
     private:
+        unsigned maxPoints, maxFrames;
+        
         void firstFrame();
         void nextFrame();
         
