@@ -140,12 +140,12 @@ namespace itg
         ofNoFill();
         for (int i = 0; i < frames.size(); ++i)
         {
-            glPushMatrix();
-            glMultMatrixf(frames[i].getPtr());
-            glRotatef(90, 0, 1, 0);
+            ofPushMatrix();
+            ofMultMatrix(frames[i]);
+            ofRotate(90, 0, 1, 0);
             ofCircle(0, 0, axisSize * 2.f);
             ofDrawAxis(axisSize);
-            glPopMatrix();
+            ofPopMatrix();
         }
     }
     
