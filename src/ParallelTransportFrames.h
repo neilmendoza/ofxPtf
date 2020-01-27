@@ -56,7 +56,7 @@ namespace nm
         
         deque<glm::mat4>& getFrames() { return frames; }
         
-        ofMatrix4x4 frameAt(unsigned idx) const { return frames[idx]; }
+        glm::mat4 frameAt(unsigned idx) const { return frames[idx]; }
         
         ofVec3f getStartNormal() const { return startNormal; }
         ofVec3f getCurrentTangent() const { return curTangent; }
