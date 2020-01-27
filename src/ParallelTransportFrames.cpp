@@ -58,8 +58,8 @@ namespace nm
         
         if(glm::length2(n) == 0.0f)
         {
-            int i = fabs( t[0] ) < fabs( t[1] ) ? 0 : 1;
-            if( fabs( t[2] ) < fabs( t[i] ) ) i = 2;
+            int i = fabs(t[0]) < fabs(t[1])?0:1;
+            if (fabs(t[2]) < fabs(t[i])) i = 2;
 
             glm::vec3 v(0.f);
             v[i] = 1.f;
@@ -68,7 +68,7 @@ namespace nm
 
         glm::vec3 b = glm::cross(t, n);
 
-        glm::mat4 m(t[0], t[1], t[2], 0.0,
+        glm::mat4 m(t[0], t[1], t[2], 0.f,
             b[0], b[1], b[2], 0.0,
             n[0], n[1], n[2], 0.0,
             points[0][0], points[0][1], points[0][2], 1.f);
