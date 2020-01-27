@@ -36,7 +36,6 @@ namespace nm
     ParallelTransportFrames::ParallelTransportFrames() :
         maxPoints(4), maxFrames(numeric_limits<unsigned>::max())
     {
-        
     }
     
     bool ParallelTransportFrames::addPoint(const ofVec3f& point)
@@ -54,25 +53,32 @@ namespace nm
                           
     void ParallelTransportFrames::firstFrame()
     {
-        ofVec3f t = ( points[1] - points[0] ).normalize();
-
-        ofVec3f n = t.crossed( points[2] - points[0] ).normalize();
-        if( n.length() == 0.0f )
+        glm::vec3 t = glm::normalize(points[1] - points[0]);
+        glm::vec3 n = glm::normalize(glm::cross(t, points[2] - points[0]));
+        
+        if(glm::length2(n) == 0.0f)
         {
             int i = fabs( t[0] ) < fabs( t[1] ) ? 0 : 1;
             if( fabs( t[2] ) < fabs( t[i] ) ) i = 2;
 
-            ofVec3f v;
+            glm::vec3 v(0.f);
             v[i] = 1.f;
-            n = t.crossed( v ).normalize();
+            n = glm::normalize(glm::cross(t, v));
         }
 
-        ofVec3f b = t.crossed( n );
+        glm::vec3 b = glm::cross(t, n);
 
-        ofMatrix4x4 m(t[0], t[1], t[2], 0.0,
-                      b[0], b[1], b[2], 0.0,
-                      n[0], n[1], n[2], 0.0,
-                      points[0][0], points[0][1], points[0][2], 1.f); 
+/*        glm::mat4 m;
+        m[0] = glm::vec4(b, 0.f);
+        m[1] = glm::vec4(n, 0.f);
+        m[2] = glm::vec4(t, 0.f);
+        m[3] = glm::vec4(points[0], 1.f);
+  */
+        
+        glm::mat4 m(t[0], t[1], t[2], 0.0,
+            b[0], b[1], b[2], 0.0,
+            n[0], n[1], n[2], 0.0,
+            points[0][0], points[0][1], points[0][2], 1.f);
             
         frames.push_back(m);
         
@@ -83,55 +89,50 @@ namespace nm
     void ParallelTransportFrames::nextFrame()
     {
         curTangent = points.back() - points[points.size() - 2];
-        ofVec3f a;	// Rotation axis.
-        float r = 0;						// Rotation angle.
+        glm::vec3 axis;
+        float angle = 0;
         
-        if( ( prevTangent.lengthSquared() != 0.0 ) && ( curTangent.lengthSquared() != 0.0 ) )
+        if(glm::length2(prevTangent) != 0.f && glm::length2(curTangent) != 0.f)
         {
-            curTangent.normalize();
-            float dot = prevTangent.dot( curTangent ); 
+            curTangent = glm::normalize(curTangent);
+            
+            float dot = glm::dot(prevTangent, curTangent);
             
             if( dot > 1.f ) dot = 1.f; 
             else if( dot < -1.0 ) dot = -1.0;
             
-            r = acos( dot );
-            a = prevTangent.crossed( curTangent );
+            angle = acos( dot );
+            axis = glm::cross(prevTangent, curTangent);
         }
         
-        if( ( a.length() != 0.0 ) && ( r != 0.0 ) )
+        if (glm::length2(axis) != 0.f && angle != 0.f)
         {
-            ofMatrix4x4 R;
-            R.makeRotationMatrix(RAD_TO_DEG * r, a);		
-            ofMatrix4x4 Tj;
-            Tj.makeTranslationMatrix( points.back() );
-            ofMatrix4x4 Ti;
-            Ti.makeTranslationMatrix( -points[points.size() - 2] );
+            glm::mat4 r = glm::mat4(1.f);
+            r = glm::rotate(r, angle, axis);
+            glm::mat4 tj = glm::translate(points.back());
+            glm::mat4 ti = glm::translate(-points[points.size() - 2]);
             
-            frames.push_back(frames.back() * Ti * R * Tj);
+            frames.push_back(tj * r * ti * frames.back());
         }
         else
         {
-            ofMatrix4x4 Tr;
-            Tr.makeTranslationMatrix( points.back() - points[points.size() - 2] );
+            glm::mat4 tr = glm::translate(points.back() - points[points.size() - 2]);
             
-            frames.push_back(frames.back() * Tr);
+            frames.push_back(tr * frames.back());
         }
         prevTangent = curTangent;
         while (frames.size() > maxFrames) frames.pop_front();
     }
     
-    ofMatrix4x4 ParallelTransportFrames::normalMatrix() const
+    glm::mat3 ParallelTransportFrames::normalMatrix() const
     {
-        ofMatrix4x4 normalMatrix = ofMatrix4x4::getTransposedOf(const_cast<ofMatrix4x4&>(frames.back()).getInverse());
-        return ofMatrix4x4(normalMatrix(0, 0), normalMatrix(0, 1), normalMatrix(0, 2), 0.f,
-                           normalMatrix(1, 0), normalMatrix(1, 1), normalMatrix(1, 2), 0.f,
-                           normalMatrix(2, 0), normalMatrix(2, 1), normalMatrix(2, 2), 0.f,
-                           0.f,                0.f,                0.f,                1.f);
+        glm::mat3 transform3(frames.back());
+        return glm::inverseTranspose(transform3);
     }
     
     ofVec3f ParallelTransportFrames::calcCurrentNormal() const
     {
-        return getStartNormal() * normalMatrix();
+        return normalMatrix() * getStartNormal();
     }
     
     void ParallelTransportFrames::debugDraw(float axisSize)
@@ -142,8 +143,8 @@ namespace nm
         {
             ofPushMatrix();
             ofMultMatrix(frames[i]);
-            ofRotate(90, 0, 1, 0);
-            ofCircle(0, 0, axisSize * 2.f);
+            ofRotateDeg(90, 0, 1, 0);
+            ofDrawCircle(0, 0, axisSize * 2.f);
             ofDrawAxis(axisSize);
             ofPopMatrix();
         }

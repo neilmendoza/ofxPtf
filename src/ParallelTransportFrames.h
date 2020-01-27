@@ -48,13 +48,13 @@ namespace nm
         bool addPoint(const ofVec3f& point);
         void debugDraw(float axisSize = 10.f);
         
-        ofMatrix4x4 transformMatrix() const { return frames.back(); }
-        ofMatrix4x4 normalMatrix() const;
+        glm::mat4 transformMatrix() const { return frames.back(); }
+        glm::mat3 normalMatrix() const;
         
         unsigned framesSize() const { return frames.size(); }
         unsigned pointsSize() const { return points.size(); }
         
-        deque<ofMatrix4x4>& getFrames() { return frames; }
+        deque<glm::mat4>& getFrames() { return frames; }
         
         ofMatrix4x4 frameAt(unsigned idx) const { return frames[idx]; }
         
@@ -73,10 +73,10 @@ namespace nm
         void firstFrame();
         void nextFrame();
         
-        ofVec3f startNormal;
-        ofVec3f prevTangent, curTangent;
+        glm::vec3 startNormal;
+        glm::vec3 prevTangent, curTangent;
         
-        deque<ofVec3f> points;
-        deque<ofMatrix4x4> frames;
+        deque<glm::vec3> points;
+        deque<glm::mat4> frames;
     };
 }
