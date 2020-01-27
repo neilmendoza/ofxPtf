@@ -31,7 +31,7 @@
  */
 #include "ParallelTransportFrames.h"
 
-namespace itg
+namespace nm
 {
     ParallelTransportFrames::ParallelTransportFrames() :
         maxPoints(4), maxFrames(numeric_limits<unsigned>::max())

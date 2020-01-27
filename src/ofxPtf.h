@@ -33,4 +33,4 @@
 
 #include "ParallelTransportFrames.h"
 
-typedef itg::ParallelTransportFrames ofxPtf;
+typedef nm::ParallelTransportFrames ofxPtf;

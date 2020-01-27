@@ -33,7 +33,7 @@
 
 #include "ofMain.h"
 
-namespace itg
+namespace nm
 {
     /*
      * PTF based on Cinder's implementation as edge cases are all handled 
