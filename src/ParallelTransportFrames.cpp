@@ -38,7 +38,12 @@ namespace nm
     {
     }
     
-    bool ParallelTransportFrames::addPoint(const ofVec3f& point)
+    bool ParallelTransportFrames::addPoint(float x, float y, float z)
+    {
+        return addPoint(glm::vec3(x, y, z));
+    }
+    
+    bool ParallelTransportFrames::addPoint(const glm::vec3& point)
     {
         points.push_back(point);
         while (points.size() > maxPoints) points.pop_front();

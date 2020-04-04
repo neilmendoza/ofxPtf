@@ -45,7 +45,8 @@ namespace nm
         
         ParallelTransportFrames();
         
-        bool addPoint(const ofVec3f& point);
+        bool addPoint(float x, float y, float z);
+        bool addPoint(const glm::vec3& point);
         void debugDraw(float axisSize = 10.f);
         
         glm::mat4 transformMatrix() const { return frames.back(); }
