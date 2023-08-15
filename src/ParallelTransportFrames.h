@@ -57,11 +57,13 @@ namespace nm
         
         deque<glm::mat4>& getFrames() { return frames; }
         
+        glm::vec3 getLastPoint() const { return points.back(); }
+        
         glm::mat4 frameAt(unsigned idx) const { return frames[idx]; }
         
         ofVec3f getStartNormal() const { return startNormal; }
         ofVec3f getCurrentTangent() const { return curTangent; }
-       
+        
         ofVec3f calcCurrentNormal() const;
         
         void clear();

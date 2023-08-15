@@ -61,7 +61,7 @@ namespace nm
         glm::vec3 t = glm::normalize(points[1] - points[0]);
         glm::vec3 n = glm::normalize(glm::cross(t, points[2] - points[0]));
         
-        if(glm::length2(n) == 0.0f)
+        if (glm::any(glm::isnan(n)) || glm::length2(n) == 0.0f)
         {
             int i = fabs(t[0]) < fabs(t[1])?0:1;
             if (fabs(t[2]) < fabs(t[i])) i = 2;
